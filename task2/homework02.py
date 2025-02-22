@@ -7,7 +7,7 @@ def get_cats_info(path):
                 cat_dict = {
                     'id':lines[0],
                     'name':lines[1],
-                    'age':int(lines[2])
+                    'age':lines[2]
                 }
                 cat_list.append(cat_dict)
 
