@@ -4,28 +4,33 @@ def parse_input(user_input):
     return cmd, *args
 
 def add_contact(args, contacts):
-    try:
-        name, phone = args
-        contacts[name] = phone
-        return "Contact added."
-    except ValueError:
-        return "Enter contact name and phone number."
+    if len(args) != 2:
+        return "Invalid input. Use: add username phone"
+    name, phone = args
+    contacts[name] = phone
+    return "Contact added."
 
 
 def change_contact(args, contacts):
-    try:
-        name, phone = args
-        if name in contacts:
-            contacts[name] = phone
-            return "Contact phone number has been changed."
-        return "Contact doesn\'t exist! Use command 'add' instead."
-    except ValueError:
-        return "Enter contact name and phone number."
-
-def contact_phone_number(name, contacts):
+    if len(args) != 2:
+        return "Invalid input. Use: change username phone"
+    name, phone = args
     if name in contacts:
-        return contacts[name]
+        contacts[name] = phone
+        return "Contact phone number has been changed."
+    return "Contact doesn\'t exist! Use command 'add' instead."
+
+def get_phone(args, contacts):
+    if len(args) != 1:
+        return "Invalid input. Use: phone username"
+    if args in contacts:
+        return contacts[args]
     return "Contact doesn\'t exist!"
+
+def get_all(contacts):
+    if not contacts:
+        return "No contacts found."
+    return "\n".join(f"{name} : {phone}" for name,phone in contacts.items())
 
 def main():
     contacts = {}
@@ -44,11 +49,9 @@ def main():
         elif command == "change":
             print(change_contact(args, contacts))
         elif command == "phone":
-            try:
-                command, name = parse_input(user_input)
-                print(contact_phone_number(name, contacts))
-            except ValueError:
-                print("Enter contact name.")
+            print(get_phone(args, contacts))
+        elif command =="all":
+            print(get_all(contacts))
         else:
             print("Invalid command.")
 
