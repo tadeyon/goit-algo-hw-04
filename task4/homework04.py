@@ -23,9 +23,8 @@ def change_contact(args, contacts):
 def get_phone(args, contacts):
     if len(args) != 1:
         return "Invalid input. Use: phone username"
-    if args in contacts:
-        return contacts[args]
-    return "Contact doesn\'t exist!"
+    name = args[0]
+    return contacts.get(name, "Contact not found.")
 
 def get_all(contacts):
     if not contacts:
